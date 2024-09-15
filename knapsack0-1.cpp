@@ -1,0 +1,108 @@
+/*
+    ੴ ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ
+*/
+#include <iostream>
+#include <bits/stdc++.h>
+#include <algorithm>
+#include <bitset>
+#include <cstdlib>
+#include <iomanip>
+#define FAST_IO ios_base::sync_with_stdio(false), cin.tie(nullptr)
+#define int long long
+using namespace std;
+using ll = long long;
+using lld = long double;
+#define mod 10000000007
+#define INF 1e18
+#define pi 3.141592653589793238462
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define TEST int T; cin >> T; while (T--)
+#define MOD(n) n%1000000007
+#define VII vector<pair<int, int>>
+#define VI vector<int>
+#define VS vector<string>
+#define VC vector<char>
+#define VB vector<bool>
+#define FF first
+#define SS second
+#define LONGINT << fixed << setprecision(0)
+#define FOR(i, n) for(long long i=0; i<n; i++)
+#define Radhe ios_base::sync_with_stdio(false);
+#define Krishna cin.tie(NULL); cout.tie(NULL);
+#define VIN(X, N) for(int i=0; i<N; i++){int V; cin >> V; H.push_back(V);};
+#define VOUT(x,X) for(auto x:X) cout << x << " ";
+#define SORT(V) sort(V.begin(), V.end())
+#define REVERSE(V) reverse(V.begin(), V.end())
+#define ADD(V) accumulate(V.begin(), V.end(), 0)
+#define PI 3.1415926535897932384626433832795
+#define endl "\n"
+#define OLD freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
+
+int isprime(int n){if(n==1) return 0;for(int i = 2; i <= sqrt(n); i++){if(n % i == 0)return 0;}return 1;}
+long long lcm(int a, int b) {return (a / __gcd(a, b)) * b;}
+bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){return (a.second < b.second);}
+int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(count==0) ans = n; (n==ans) ? (count++) : (count--); } return ans; }
+int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
+int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
+
+int knapSackRecursive(vector<int>& wt, vector<int>& val, int w, int n, vector<vector<int>>& dp) {
+    if (n <= 0 || w <= 0) return 0;
+
+    if (dp[n][w] != -1) {
+        return dp[n][w];
+    }
+
+    if (wt[n - 1] <= w) {
+        dp[n][w] = max(val[n - 1] + knapSackRecursive(wt, val, w - wt[n - 1], n - 1, dp),
+                       knapSackRecursive(wt, val, w, n - 1, dp));
+    } else {
+        dp[n][w] = knapSackRecursive(wt, val, w, n - 1, dp);
+    }
+
+    return dp[n][w];
+}
+
+int knapSack(int W, vector<int>& wt, vector<int>& val) {
+    int n = wt.size();
+    
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, -1));
+    
+    return knapSackRecursive(wt, val, W, n, dp);
+}
+void solve(){
+
+    int W;
+    vector<int> wt, val;
+
+    int n = wt.size();
+    
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0)); //change to initial filling -1 for memoization
+
+    dp[0][0] = 0;
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= W; j++)
+        {
+            if (wt[i - 1] <= j) {
+                dp[i][j] = max(val[i - 1] + dp[i - 1][j - wt[i - 1]], dp[i - 1][j]);
+            } else {
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+    cout<<dp[n][W];
+    
+}
+
+signed main() {
+    FAST_IO;
+    int tc = 1;
+    // cin >> tc;
+    while (tc--) {
+        solve();
+    }
+    return 0;
+}
