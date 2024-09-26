@@ -48,24 +48,27 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n , k , total = 0;
-    cin>>n>>k;
-    VI arr , brr;
-    VIN(arr, n);
-    VIN(brr, n);
-    for(auto x : arr){
-        total+=x;
+    int n , m;
+    cin>>n>>m;
+    VI arr;
+    VIN(arr , n);
+    int mx = INT_MIN;
+    for(auto x:arr){
+        mx = max(mx, x);        
     }
-    SORT(arr);
-    SORT(brr);
-    int res = 0;
-    for (int i = 0; i < k; i++)
-    {
-        total -= arr[i] + brr[n-1-i];
-        res = max(res , total);
+    while(m--){
+        char c;
+        cin>>c;
+        int l , r;
+        cin>>l>>r;
+        if(l<=mx && mx<=r){
+            if(c=='+'){
+                mx++;
+            }else mx--;
+        }
+        cout<<mx<<" ";
     }
-    cout<<res<<"\n";
-    
+    cout<<"\n";
 }
 
 signed main() {

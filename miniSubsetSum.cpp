@@ -48,32 +48,44 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n , k , total = 0;
-    cin>>n>>k;
-    VI arr , brr;
-    VIN(arr, n);
-    VIN(brr, n);
-    for(auto x : arr){
-        total+=x;
-    }
-    SORT(arr);
-    SORT(brr);
-    int res = 0;
-    for (int i = 0; i < k; i++)
+    int n; cin>>n;
+    VI arr;
+    VIN(arr , n);
+    int range = ADD(arr);
+    int k = range / 2;
+    vector<vector<bool>> dp(n + 1, vector<bool>(k + 1, false)); //tabulation dp
+    for (int i = 0; i <= n; i++)
     {
-        total -= arr[i] + brr[n-1-i];
-        res = max(res , total);
+        dp[i][0] = true;
     }
-    cout<<res<<"\n";
-    
+    for (int i = 0; i <= k; i++)
+    {
+        dp[0][i] = false;
+    }
+    dp[0][0] = true;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= k; j++)
+        {
+            if(arr[i-1] > j) dp[i][j] = dp[i - 1][j];
+            else dp[i][j] = dp[i-1][j - arr[i-1]] || dp[i - 1][j];
+        }
+    }
+    int closestSum = 0, minDifference = INT_MAX;
+    int totalSum = ADD(arr);  
+    int halfRange = totalSum / 2;  
+    for (int i = 0; i <= halfRange; i++) {
+        if (dp[n][i]) {
+            closestSum = i;
+            minDifference = min(minDifference, totalSum - 2 * closestSum);
+        }
+    }
+    cout << minDifference << endl;
 }
 
 signed main() {
     FAST_IO;
-    int tc = 1;
-    cin >> tc;
-    while (tc--) {
-        solve();
-    }
+    // TEST 
+    solve();
     return 0;
 }
