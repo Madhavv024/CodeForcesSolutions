@@ -60,20 +60,47 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 
 void solve() {
     int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+    cin >> n;
+    vector<int> a(n);
+    unordered_map<int, int> freq;
+
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        freq[a[i]]++;
     }
-    cout<<ans<<"\n";
+
+   
+    set<int> unique_elements;
+    for (auto &i : freq) {
+        if (i.second == 1) {
+            unique_elements.insert(i.first);
+        }
+    }
+
+  
+    int max_length = 0, best_l = -1, best_r = -1;
+    for (int l = 0, r = 0; r < n; r++) {
+        if (unique_elements.count(a[r]) == 0) {
+            l = r + 1; 
+        } else {
+            int length = r - l + 1;
+            if (length > max_length) {
+                max_length = length;
+                best_l = l;
+                best_r = r;
+            }
+        }
+    }
+
+  
+    int original_score = n - freq.size();
+
+    if (max_length == 0) {
+        
+        cout << "0\n";
+    } else {
+        cout << best_l + 1 << " " << best_r + 1 << "\n";
+    }
 }
 
 signed main() {

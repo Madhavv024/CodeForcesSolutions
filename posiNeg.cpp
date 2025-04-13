@@ -58,22 +58,32 @@ int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(coun
 int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
-void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+
+vector<int> rearrangeArray(vector<int>& nums) {
+    vector<int> pos , neg;
+    int n = nums.size();
+    for(int i : nums){
+        if(i>0) pos.push_back(i);
+        else pos.pb(i);
     }
-    cout<<ans<<"\n";
+    vector<int> ans;
+    int i = 0 , j = 0 , k = 0 , posi = 1;
+    while(k<n){
+        if(posi){
+            ans.pb(pos[i]);
+            i++;
+        }else{
+            ans.pb(neg[j]);
+            j++;
+        }
+        k++;
+    }
+    return ans;
+
+}
+
+void solve() {
+    // Implement your logic here
 }
 
 signed main() {

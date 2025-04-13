@@ -61,19 +61,11 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 void solve() {
     int n;
     cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    unsigned long long ans=0;
+    for (int i = 1; i <= n / 2; ++i) {
+            ans += i * 1ll * i;
         }
-        else j += 1;
-    }
-    cout<<ans<<"\n";
+    cout << ans * 8 << "\n";
 }
 
 signed main() {

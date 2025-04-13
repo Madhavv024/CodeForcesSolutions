@@ -59,21 +59,24 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
     string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    cin >> s;
+    vector<string> targets = {"00", "25", "50", "75"};
+    int mn = INF;
+    for (const string& target : targets) {
+        int q = 1;  // Points to the second character in the target
+        int deletions = 0;  // Count deletions
+        for (int j = s.size() - 1; j >= 0; --j) {
+            if (s[j] == target[q]) {
+                --q;  // Move to the next character in the target
+            } else {
+                ++deletions;  // This character is deleted
+            }
+            if (q < 0) break;  // If both characters in the target are found, stop
         }
-        else j += 1;
+        mn = min(mn, deletions);  // Track the minimum deletions
     }
-    cout<<ans<<"\n";
+    cout << mn << '\n';
 }
 
 signed main() {

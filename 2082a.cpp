@@ -59,21 +59,45 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> A(n, vector<int>(m));
+
+    for (int i = 0; i < n; i++) {
+        string row;
+        cin >> row;
+        for (int j = 0; j < m; j++) {
+            A[i][j] = row[j] - '0';
         }
-        else j += 1;
     }
-    cout<<ans<<"\n";
+
+    vector<int> rowXor(n, 0), colXor(m, 0);
+    vector<int> oddRows, oddCols;
+
+    // Calculate XOR for each row and column
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++) {
+            rowXor[i] ^= A[i][j];
+            colXor[j] ^= A[i][j];
+        }
+
+    // Identify rows and columns with odd XOR values
+    for (int i = 0; i < n; i++)
+        if (rowXor[i] != 0) oddRows.push_back(i);
+    
+    for (int j = 0; j < m; j++)
+        if (colXor[j] != 0) oddCols.push_back(j);
+
+    // Check conditions
+    int r = oddRows.size(), c = oddCols.size();
+
+    if (r == 0 && c == 0)
+        cout << "0\n"; // Already a good matrix
+    else if (r == c)
+        cout << r << "\n"; // Fixable by flipping at intersections
+    else
+        cout << max(r, c) << "\n"; // Fix imbalanced rows/columns separately
+
 }
 
 signed main() {

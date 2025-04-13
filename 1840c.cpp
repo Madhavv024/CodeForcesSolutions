@@ -59,21 +59,33 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    int n, k , q;
+    cin>>n>>k>>q;
+    VI arr(n);
+    for (int  i = 0; i < n; i++)
+    {
+        cin>>arr[i];
+    }
+
+    int len = 0, ans = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] <= q) {
+            len++;
+        } else {
+            if (len >= k) {
+                int cnt = (len - k + 1) * (len - k + 2) / 2;
+                ans += cnt;
+            }
+            len = 0;
         }
-        else j += 1;
+    }
+
+    if (len >= k) {
+        int cnt = (len - k + 1) * (len - k + 2) / 2;
+        ans += cnt;
     }
     cout<<ans<<"\n";
+    
 }
 
 signed main() {

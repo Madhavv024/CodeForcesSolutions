@@ -59,26 +59,57 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    int q;
+    cin>>q;
+    priority_queue<int> maxL;
+    priority_queue<int , vector<int>, greater<int>> minR;
+    map<int, int> deletedL, deletedR;
+    map<pair<int, int>, int> segmentCount;
+
+    auto cleanMaxL = [&]() {
+        while (!maxL.empty() && deletedL[maxL.top()] > 0) {
+            deletedL[maxL.top()]--;
+            maxL.pop();
         }
-        else j += 1;
+    };
+
+    auto cleanMinR = [&]() {
+        while (!minR.empty() && deletedR[minR.top()] > 0) {
+            deletedR[minR.top()]--;
+            minR.pop();
+        }
+    };
+
+    while(q--){
+        char op;
+        int l, r;
+        cin >> op >> l >> r;
+
+        if(op=='+'){
+            segmentCount[{l, r}]++;
+            maxL.push(l);
+            minR.push(r);
+        }else{
+            segmentCount[{l, r}]--;
+            deletedL[l]++;
+            deletedR[r]++;
+        }
+        cleanMaxL();
+        cleanMinR();
+        if (!maxL.empty() && !minR.empty() && maxL.top() > minR.top()) {
+            cout << "YES\n";
+        } else {
+            cout << "NO\n";
+        }
     }
-    cout<<ans<<"\n";
+
+
+
 }
 
 signed main() {
     FAST_IO;
-    TEST
+    //TEST
         solve();
     
     return 0;

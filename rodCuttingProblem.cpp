@@ -47,12 +47,37 @@ int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(coun
 int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
+int cutting_rod(vector<int> price, int length, int cut) {
+  if (length <= 0 || cut <= 0) {
+    return 0;
+  }
+  int res;
+  if (cut <= length)
+    res = max(price[cut - 1] + cutting_rod(price, length - cut, cut),
+              cutting_rod(price, length, cut - 1));
+  else
+    res = cutting_rod(price, length, cut - 1);
+  return res;
+}
+
+
+int knpsck(VI arr , int a ){
+    // if(n<=0 ||  )
+}
 
 void solve() {
-    VI len = {1,2,3,4,5,6,7,8} , prize = {1,5,8,9,0,17,17,20};
-    int n = 8;
+    int n; cin>>n;
+    VI arr(n);
+    VI price(n);
+    for(int i = 0;i<n;i++){
+        cin>>arr[i];
+    }
+    for(int i = 0;i<n;i++){
+        cin>>price[i];
+    }
 
-    
+    // int maxiProfit = knpsck(arr , price , n ,0);
+
 }
 
 signed main() {

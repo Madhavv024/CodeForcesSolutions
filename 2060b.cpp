@@ -40,17 +40,6 @@ using lld = long double;
 #define endl "\n"
 #define OLD freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 
-/**
-* Limits in C++ for reference
-* _____________________________________________________________________________________
-* |Sr| Macro Name | Description                     | Value
-* |No|____________|_________________________________|__________________________________
-* |1.| ULLONG_MAX | Maximum value unsigned long long| 18,446,744,073,709,551,615 (10^20)
-* |2.| LLONG_MAX  | Maximum value long long         | 9,223,372,036,854,775,807 (10^19)
-* |3.| LLONG_MIN  | Minimum value long long         |-9,223,372,036,854,775,808 -1*(10^19)
-* |4.| INT_MAX    | Maximum value int               | 2,147,483,647 (10^10)
-* |5.| INT_MIN    | Minimum value int               |-2,147,483,648 (10^10)
-*/
 int isprime(int n){if(n==1) return 0;for(int i = 2; i <= sqrt(n); i++){if(n % i == 0)return 0;}return 1;}
 long long lcm(int a, int b) {return (a / __gcd(a, b)) * b;}
 bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){return (a.second < b.second);}
@@ -59,21 +48,51 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    int n , m;
+    cin>>n>>m;
+    vector<vector<int>> cards(n , vector<int>(m));
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> cards[i][j];
+    for (int i = 0; i < n; i++)
+        sort(cards[i].begin(), cards[i].end());
+    
+    bool allEqDist = true;
+
+    vector<vector<int>> tempCards = cards;
+    sort(tempCards.begin(),tempCards.end());
+    int top = -1;
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++){
+            if (tempCards[j][i] != top+1)
+                {
+                    allEqDist = false;
+                    break;
+                }
+ 
+                top = tempCards[j][i];
         }
-        else j += 1;
+        if (!allEqDist) break;
     }
-    cout<<ans<<"\n";
+
+    if (allEqDist)
+    {
+        vector<pair<int,int>> cows(n);
+        for (int i = 0; i < n; i++)
+        {
+            cows[i].first = cards[i][0];
+            cows[i].second = i+1;
+        }
+        sort(cows.begin(),cows.end());
+        for (int i = 0; i < n; i++)
+        {
+            cout << cows[i].second;
+            if (i != n-1) cout << ' ';
+        }
+        cout << '\n';
+    }
+    else cout << -1 << '\n';
 }
 
 signed main() {

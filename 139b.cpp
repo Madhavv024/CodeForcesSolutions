@@ -59,26 +59,55 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+    int n; cin>>n;
+    vector<tuple<int, int, int>> rooms(n);
+    for (int i = 0; i < n; ++i) {
+        int length, width, height;
+        cin >> length >> width >> height;
+        rooms[i] = {length, width, height};
     }
-    cout<<ans<<"\n";
+
+    int m;
+    cin >> m;
+
+    vector<tuple<int, int, int>> wallpapers(m);
+    for (int i = 0; i < m; ++i) {
+        int roll_len, roll_wid, price;
+        cin >> roll_len >> roll_wid >> price;
+        wallpapers[i] = {roll_len, roll_wid, price};
+    }
+
+    int total_cost = 0;
+    for (auto& [room_len, room_wid, room_height] : rooms) {
+        int perimeter = 2 * (room_len + room_wid); 
+        long long min_cost = LLONG_MAX;
+
+        for (auto& [roll_len, roll_wid, price] : wallpapers) {
+            if (roll_len < room_height) continue; // roll too short for this room
+
+            int strips_per_roll = roll_len / room_height;
+            if (strips_per_roll == 0) continue;
+
+            // Total wall width one roll can cover
+            int coverage_per_roll = strips_per_roll * roll_wid;
+
+            // How many rolls needed?
+            int rolls_needed = (perimeter + coverage_per_roll - 1) / coverage_per_roll;
+
+            long long cost = 1LL * rolls_needed * price;
+            min_cost = min(min_cost, cost);
+        }
+
+        total_cost += min_cost;
+    }
+
+    cout << total_cost << endl;
+
 }
 
 signed main() {
     FAST_IO;
-    TEST
+    //TEST
         solve();
     
     return 0;

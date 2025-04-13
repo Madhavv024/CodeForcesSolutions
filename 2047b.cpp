@@ -60,20 +60,25 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 
 void solve() {
     int n;
-    cin>>n;
     string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    cin>>n>>s;
+    vector<int> cnt(26);
+    for (char c : s)++cnt[c - 'a'];
+    int mnp = -1, mxp = -1;
+    for (int i = 0; i < 26; ++i){
+        if (cnt[i]){
+            if (mnp == -1 || cnt[mnp] > cnt[i])mnp = i;
+            if (mxp == -1 || cnt[mxp] <= cnt[i])mxp = i;
         }
-        else j += 1;
     }
-    cout<<ans<<"\n";
+    for (char &c : s){
+        if (c == mnp + 'a'){
+            c = mxp + 'a';
+            break;
+        }
+    }
+    cout<<s<<"\n";
+
 }
 
 signed main() {

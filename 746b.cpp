@@ -58,27 +58,28 @@ int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(coun
 int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
-void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+void printArr(vector<char> &arr){
+    for(auto &i:arr){
+        cout<<i<<" ";
     }
-    cout<<ans<<"\n";
+    cout<<"\n";
+}
+
+void solve() {
+    int n; 
+    string enc; cin>>n>>enc;
+    vector<char> decoded;
+    for (int i = n - 1; i >= 0; --i) {
+        int medianPos = decoded.size() / 2;
+        decoded.insert(decoded.begin() + medianPos, enc[i]);
+        //printArr(decoded);
+    }
+    cout<<string(decoded.begin(), decoded.end());
 }
 
 signed main() {
     FAST_IO;
-    TEST
+    //TEST
         solve();
     
     return 0;

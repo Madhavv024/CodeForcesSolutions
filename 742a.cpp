@@ -60,25 +60,18 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 
 void solve() {
     int n;
+    vector<int> cycle = {8, 4, 2, 6};
     cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+    if(n==0) {cout<<1<<"\n";
+    return;
     }
-    cout<<ans<<"\n";
+    int ind = n % 4 == 0 ? 3 : n % 4 - 1;
+    cout<<cycle[ind]; 
 }
 
 signed main() {
     FAST_IO;
-    TEST
+    //TEST
         solve();
     
     return 0;

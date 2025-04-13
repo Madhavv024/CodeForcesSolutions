@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <iomanip>
 #define FAST_IO ios_base::sync_with_stdio(false), cin.tie(nullptr)
-#define int long long
+// #define int long long
 using namespace std;
 using ll = long long;
 using lld = long double;
@@ -59,21 +59,23 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
-        }
-        else j += 1;
+    int W , H , x1 , y1 , x2 , y2 , w , h , ans = INT_MAX;
+    cin>>W>>H>>x1>>y1>>x2>>y2>>w>>h;
+    int wr = x2 - x1 , hr = y2 - y1;
+    if(w+wr<=W&&h<=H)
+    {
+        int d1=max(0,w-x1);
+        int d2=max(0,w-(W-x2));
+        ans=min(ans,min(d1,d2));
     }
-    cout<<ans<<"\n";
+    if(h+hr<=H&&w<=W)
+    {
+        int d1=max(0,h-y1);
+        int d2=max(0,h-(H-y2));
+        ans=min(ans,min(d1,d2));
+    }
+    if(ans==INT_MAX) cout<<-1<<"\n";
+    else cout << fixed << setprecision(9) << static_cast<double>(ans) << "\n";
 }
 
 signed main() {
