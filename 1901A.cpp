@@ -27,15 +27,14 @@ int32_t main()
         {
             cin >> arr[i];
         }
-        int last=0;
-        int ans = 0;
+        int ans = 0 , prev = 0;
         for (int i = 0; i < n; i++)
         {
-            ans = max(ans , arr[i]-last);
-            last = arr[i];
+            ans = max(ans , arr[i]-prev);
+            prev = arr[i];
         }
-        ans = max(ans , 2 * (x - last));
-        cout<<ans<<"\n";
+        ans = max(ans , 2*(x - prev ));
+        cout<<ans<<"\n";        
     }
     return 0;
 }

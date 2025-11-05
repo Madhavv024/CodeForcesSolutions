@@ -65,12 +65,12 @@ void solve() {
     {
         cin>>i;
     }
-    int ans = b;
+    int finans = b;
     for (int i = 0; i < n; i++)
     {
-        ans += min(arr[i] , a - 1);
+        finans += min(arr[i] , a - 1);
     }
-    cout<<ans;
+    cout<<finans<<"\n";
     
     
 }

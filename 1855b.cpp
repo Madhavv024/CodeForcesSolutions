@@ -59,15 +59,15 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n , ans = 0; cin>>n;
+    int n , finans = 0; cin>>n;
     for (int i = 1; ; i++)
     {
         if(n % i){
-            ans = i-1;
+            finans = i-1;
             break;
         }
     }
-    cout<<ans<<"\n";
+    cout<<finans<<"\n";
     
 }
 

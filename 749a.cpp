@@ -47,9 +47,6 @@ int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(coun
 int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
-void solve() {
-    // Implement your logic here
-}
 
 signed main() {
     int n;  cin >> n;

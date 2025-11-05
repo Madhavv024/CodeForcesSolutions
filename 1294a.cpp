@@ -62,6 +62,26 @@ void solve() {
       cout<<"NO\n";
 }
 
+bool detectCycleBFSHelper(vector<vector<int>>& adj,vector<int>& vis, queue<pair<int,int>> &q){
+        
+        while(!q.empty()){
+            int node = q.front().first;
+            int par = q.front().second;
+            
+            if(vis[node]) continue;
+            vis[node] = true;
+            
+            for(int n: adj[node]){
+                if(par == n) continue;
+                if(vis[n]) return true; //cycle detected
+                q.push({n, node});
+            }
+            
+        }
+        return false;
+        
+    }
+
 signed main() {
     FAST_IO;
     TEST

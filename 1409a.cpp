@@ -52,7 +52,12 @@ void solve() {
     int a , b , ans = 0;
     cin>>a>>b;
     int diff = abs(a - b);
+    // 42 13
+    //diff = 29
+    
     ans += diff / 10;
+    // ans = 2
+
     if(diff%10==0) cout<<ans;
     else cout<<ans+1;
     nl

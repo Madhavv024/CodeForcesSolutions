@@ -59,21 +59,41 @@ int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end()
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
 void solve() {
-    int n;
-    cin>>n;
-    string s;
-    cin>>s;
-    int i = 0 , j = 1;
-    string ans = "";
-    while(j<n){
-        if(s[i]==s[j]){
-            ans += s[i];
-            i = j + 1;
-            j += 2;
+    int n; cin>>n;
+    string s; cin>>s;
+    vector<int> prefa(n,0), suffa(n , 0), prefb(n , 0), suffb(n , 0), cnt(n , 0) , scnt(n , 0);
+    cnt[0] = s[0]=='a';
+    for(int i=1;i<n;i++) {
+        prefa[i] = prefa[i-1];
+        prefb[i] = prefb[i-1];
+        cnt[i] = cnt[i-1];
+        if(s[i]=='a'){
+            cnt[i]++;
+            prefb[i] += i + 1 - cnt[i];
+        }else{
+            prefa[i] += cnt[i];
         }
-        else j += 1;
+    }
+
+    suffa[n-1] = s[n-1]=='a';
+    for(int i = n-2;i>=0;i--){
+        suffa[i] = suffa[i+1];
+        suffb[i] = suffb[i+1];
+        scnt[i] = scnt[i+1];
+        if(s[i]=='a'){
+            scnt[i]++;
+            suffb[i] += n - i - scnt[i];
+        }else{
+            suffa[i] += scnt[i];
+        }
+    }
+
+    int ans = INT_MAX;
+    for(int i = 0;i<n;i++){
+        ans = min({ans , prefa[i]+suffa[i], prefb[i] + suffb[i]});
     }
     cout<<ans<<"\n";
+
 }
 
 signed main() {

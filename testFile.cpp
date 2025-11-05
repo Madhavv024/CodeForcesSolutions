@@ -40,6 +40,17 @@ using lld = long double;
 #define endl "\n"
 #define OLD freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 
+/**
+* Limits in C++ for reference
+* _____________________________________________________________________________________
+* |Sr| Macro Name | Description                     | Value
+* |No|____________|_________________________________|__________________________________
+* |1.| ULLONG_MAX | Maximum value unsigned long long| 18,446,744,073,709,551,615 (10^20)
+* |2.| LLONG_MAX  | Maximum value long long         | 9,223,372,036,854,775,807 (10^19)
+* |3.| LLONG_MIN  | Minimum value long long         |-9,223,372,036,854,775,808 -1*(10^19)
+* |4.| INT_MAX    | Maximum value int               | 2,147,483,647 (10^10)
+* |5.| INT_MIN    | Minimum value int               |-2,147,483,648 (10^10)
+*/
 int isprime(int n){if(n==1) return 0;for(int i = 2; i <= sqrt(n); i++){if(n % i == 0)return 0;}return 1;}
 long long lcm(int a, int b) {return (a / __gcd(a, b)) * b;}
 bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){return (a.second < b.second);}
@@ -47,12 +58,49 @@ int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(coun
 int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
 int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
 
-void solve() {
-    int n; cin>>n;
-    if(n%33==0){
-        cout<<"YES\n";
-    }else cout<<"NO\n";
+
+// void solve() {
+//     int n, m, l , r;
+//     cin>>n>>m>>l>>r;
+//     int k = m <= -l ? m : -l;
+//     cout<<-k<<" "<<m-k<<"\n";
+// }
+
+void solve(){
+        int n; cin >> n;
+        vector<vector<int>> G(n, vector<int>(n));
+       
+        unordered_set<int> seen;        // for fast lookup
+    vector<int> ordered_elements;   // to preserve insertion order
+
+    // Read the grid, collect values into both set and vector
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> G[i][j];
+            int val = G[i][j];
+            if (seen.find(val) == seen.end()) {
+                seen.insert(val);
+                ordered_elements.push_back(val); // preserve order
+            }
+        }
+    }
+
+    // Find the first missing number from 1 to 2n
+    int missing = -1;
+    for (int i = 1; i <= 2 * n; ++i) {
+        if (seen.find(i) == seen.end()) {
+            missing = i;
+            break;
+        }
+    }
+
+    if (missing != -1) cout << missing << " ";
+    for (int val : ordered_elements) {
+        cout << val << " ";
+    }
+        cout << '\n';
 }
+
 
 signed main() {
     FAST_IO;

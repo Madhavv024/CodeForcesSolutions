@@ -1,45 +1,74 @@
+/*
+    ੴ ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ ਨਿਰਭਉ ਨਿਰਵੈਰੁ ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ ਗੁਰ ਪ੍ਰਸਾਦਿ
+*/
 #include <iostream>
-#include <vector>
-#include <string>
-
+#include <bits/stdc++.h>
+#include <algorithm>
+#include <bitset>
+#include <cstdlib>
+#include <iomanip>
+#define FAST_IO ios_base::sync_with_stdio(false), cin.tie(nullptr)
+#define int long long
 using namespace std;
+using ll = long long;
+using lld = long double;
+#define mod 10000000007
+#define INF 1e18
+#define pi 3.141592653589793238462
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define TEST int T; cin >> T; while (T--)
+#define MOD(n) n%1000000007
+#define VII vector<pair<int, int>>
+#define VI vector<int>
+#define VS vector<string>
+#define VC vector<char>
+#define VB vector<bool>
+#define FF first
+#define SS second
+#define LONGINT << fixed << setprecision(0)
+#define FOR(i, n) for(long long i=0; i<n; i++)
+#define Radhe ios_base::sync_with_stdio(false);
+#define Krishna cin.tie(NULL); cout.tie(NULL);
+#define VIN(X, N) for(int i=0; i<N; i++){int V; cin >> V; X.push_back(V);};
+#define VOUT(x,X) for(auto x:X) cout << x << " ";
+#define SORT(V) sort(V.begin(), V.end())
+#define REVERSE(V) reverse(V.begin(), V.end())
+#define ADD(V) accumulate(V.begin(), V.end(), 0)
+#define PI 3.1415926535897932384626433832795
+#define endl "\n"
+#define OLD freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 
-// Function to get the mapped value of a character
-int mappedValue(char c) {
-    if (c >= 'a' && c <= 'b') return 1;  // 'a' -> 1, 'b' -> 1
-    if (c >= 'c' && c <= 'e') return 2;  // 'c' -> 2, 'd' -> 2, 'e' -> 2
-    if (c >= 'f' && c <= 'h') return 3;  // 'f' -> 3, 'g' -> 3, 'h' -> 3
-    if (c >= 'i' && c <= 'k') return 4;  // 'i' -> 4, 'j' -> 4, 'k' -> 4
-    if (c >= 'l' && c <= 'n') return 5;  // 'l' -> 5, 'm' -> 5, 'n' -> 5
-    if (c >= 'o' && c <= 'q') return 6;  // 'o' -> 6, 'p' -> 6, 'q' -> 6
-    if (c >= 'r' && c <= 't') return 7;  // 'r' -> 7, 's' -> 7, 't' -> 7
-    if (c >= 'u' && c <= 'w') return 8;  // 'u' -> 8, 'v' -> 8, 'w' -> 8
-    if (c >= 'x' && c <= 'z') return 9;  // 'x' -> 9, 'y' -> 9, 'z' -> 9
-    return 0;  // In case of invalid character (shouldn't happen with valid input)
+/**
+* Limits in C++ for reference
+* _____________________________________________________________________________________
+* |Sr| Macro Name | Description                     | Value
+* |No|____________|_________________________________|__________________________________
+* |1.| ULLONG_MAX | Maximum value unsigned long long| 18,446,744,073,709,551,615 (10^20)
+* |2.| LLONG_MAX  | Maximum value long long         | 9,223,372,036,854,775,807 (10^19)
+* |3.| LLONG_MIN  | Minimum value long long         |-9,223,372,036,854,775,808 -1*(10^19)
+* |4.| INT_MAX    | Maximum value int               | 2,147,483,647 (10^10)
+* |5.| INT_MIN    | Minimum value int               |-2,147,483,648 (10^10)
+*/
+int isprime(int n){if(n==1) return 0;for(int i = 2; i <= sqrt(n); i++){if(n % i == 0)return 0;}return 1;}
+long long lcm(int a, int b) {return (a / __gcd(a, b)) * b;}
+bool sortbysec(const pair<int,int> &a, const pair<int,int> &b){return (a.second < b.second);}
+int maxfreqof(vector<int>& nums) { int count=0, ans=0; for(int n:nums) { if(count==0) ans = n; (n==ans) ? (count++) : (count--); } return ans; }
+int MEX(set<int> V){ set<int>::iterator j; int i=0; for (j=V.begin(); j!=V.end(); j++, i++) if(*j!=i) return i; return *(V.end())+1; }
+int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int i=1; i<V.size(); i++) { if(V[i]!=pivot) { pivot = V[i]; C=0; } C++; MAX = max(MAX, C); } return MAX; }
+
+void solve() {
+    int n,m;
+    cin>>n>>m;
+    if((isprime(n) && m==1 && n!=1 )||(n==1&&m==2))cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
 }
 
-int countExtraordinarySubstrings(const string& s) {
-    int n = s.length();
-    int count = 0;
-    for (int i = 0; i < n; ++i) {
-        int sum = 0;
-        for (int j = i; j < n; ++j) {
-            sum += mappedValue(s[j]);
-            int length = j - i + 1;
-            if (sum % length == 0) {
-                count++;
-            }
-        }
-    }
-    
-    return count;
-}
-
-int main() {
-    string s;
-    cin >> s;  // Read the input string
-    
-    cout << countExtraordinarySubstrings(s) << endl;  // Output the result
+signed main() {
+    FAST_IO;
+    TEST
+        solve();
     
     return 0;
 }

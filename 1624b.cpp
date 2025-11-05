@@ -50,8 +50,8 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 void solve() {
     int a, b, c;
     cin >> a >> b >> c;
-    int z = b + b - a;
-    int x = b - (c - b);
+    int z = (2 * b) - a;
+    int x = (2 * b) - c;
     int y = a + c;
     cout << ((z % c == 0 && z/c>0) || (x % a == 0) && x/a>0 || ((y % 2 == 0 && (y/2) % b == 0) && (y/2)/b > 0) ? "YES\n" : "NO\n");
 }

@@ -5,6 +5,19 @@
         "chrono": "cpp",
         "random": "cpp",
         "limits": "cpp",
-        "valarray": "cpp"
-    }
+        "valarray": "cpp",
+        "iomanip": "cpp",
+        "cstdlib": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "vector": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "ostream": "cpp",
+        "numeric": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

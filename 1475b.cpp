@@ -50,19 +50,16 @@ int maxfreq(vector<int> V) { int C=1, MAX=0; SORT(V); int pivot = V[0]; for(int 
 void solve() {
     int n;
          cin>>n;  // 8081
-         int f1=n%2020; // 1
-         int f2=(n-f1)/2020-f1;
+
+         int num1 = n % 2020;
+         int num2 = (n - num1) / 2020 - num1;
          // (8081 - 1 ) / 2020 - 1
          // 8080 / 2019 = 4
-         if(f2>=0 && (n== 2020 * f2+2021*f1))
+         if(num2>=0 && (n == 2020 * num2 + 2021*num1)){
             // 2020 * 4 + 2021 * 1  = 8080 + 1 = 8081
-        {
-            cout << "YES\n";
-        }
-         else
-        {
-            cout << "NO\n" ;
-        }
+             cout<<"YES"<<"\n";
+         }else cout<<"NO\n";
+
 }
 
 signed main() {
